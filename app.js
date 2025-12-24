@@ -2,104 +2,8 @@
 // depends on data.js which defines window.CATALOG:contentReference[oaicite:1]{index=1}
 
 // ---------- HELPERS ----------
-// ----- SUBSCRIPTION HELPERS (front-end only prototype) -----
-const SUB_KEY = 'rmp-subscription';
-
-function getSubscription() {
-  try {
-    return JSON.parse(localStorage.getItem(SUB_KEY)) || null;
-  } catch {
-    return null;
-  }
-}
-
-function getSubscriptionForSettings() {
-  try {
-    return JSON.parse(localStorage.getItem(SUB_KEY) || 'null');
-  } catch {
-    return null;
-  }
-}
-
-function describePlanForSettings(sub) {
-  if (!sub || sub.status !== 'active') return 'Not subscribed';
-  if (sub.plan === 'standard') return 'Standard';
-  if (sub.plan === 'plus') return 'Plus';
-  return 'Active plan';
-}
-
-function updateSettingsPlanLabel() {
-  if (!settingsPlanLabel) return;
-  const sub = getSubscriptionForSettings();
-  settingsPlanLabel.textContent = describePlanForSettings(sub);
-}
-
-
-function hasActiveSubscription() {
-  const sub = getSubscription();
-  if (!sub) return false;
-  if (sub.status !== 'active') return false;
-  if (sub.validUntil && Date.now() > sub.validUntil) return false;
-  return true;
-}
-
-// Redirect to billing page if not subscribed
-(function enforceSubscription() {
-  const path = window.location.pathname;
-  const isHome =
-    path.endsWith('index.html') ||
-    path === '/' ||
-    path === '';
-
-  // let you bypass with ?preview=1 for development
-  const isPreview = window.location.search.includes('preview=1');
-
-  if (isHome && !isPreview && !hasActiveSubscription()) {
-    window.location.href = 'billing.html';
-  }
-})();
-
-// ----- PROFILE DATA (localStorage-based) -----
-const PROFILE_KEY = 'rmp-profiles';
-const ACTIVE_PROFILE_KEY = 'rmp-active-profile';
-
-function loadProfiles() {
-  try {
-    return JSON.parse(localStorage.getItem(PROFILE_KEY)) || [];
-  } catch {
-    return [];
-  }
-}
-
-function saveProfiles(list) {
-  localStorage.setItem(PROFILE_KEY, JSON.stringify(list));
-}
-
-function ensureDefaultProfiles() {
-  let list = loadProfiles();
-  if (!list.length) {
-    const id = (crypto.randomUUID && crypto.randomUUID()) || String(Date.now());
-    list = [{ id, name: 'You', isKids: false }];
-    saveProfiles(list);
-    localStorage.setItem(
-      ACTIVE_PROFILE_KEY,
-      JSON.stringify({ id, name: 'You', isKids: false })
-    );
-  }
-  return list;
-}
-
-function getActiveProfile() {
-  try {
-    return JSON.parse(localStorage.getItem(ACTIVE_PROFILE_KEY) || 'null');
-  } catch {
-    return null;
-  }
-}
-
-function setActiveProfile(profile) {
-  localStorage.setItem(ACTIVE_PROFILE_KEY, JSON.stringify(profile));
-}
+// NOTE: Billing/subscription gating and secondary profiles have been removed.
+// This build is single-profile and does not redirect to a billing page.
 
 const $  = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
@@ -126,98 +30,7 @@ function safeBg(url) {
   return 'radial-gradient(circle at 50% 20%, #243158 0%, #0a0f1a 60%)';
 }
 
-function renderSettingsProfiles() {
-  if (!settingsProfileList) return;
-  const profiles = ensureDefaultProfiles();
-  const active   = getActiveProfile();
-
-  settingsProfileList.innerHTML = '';
-
-  profiles.forEach((p, index) => {
-    const card = document.createElement('div');
-    card.className = 'settings-profile-card';
-    card.innerHTML = `
-      <div class="settings-profile-main">
-        <div class="settings-profile-avatar">${p.name.charAt(0).toUpperCase()}</div>
-        <div>
-          <div class="settings-profile-name">${p.name}</div>
-          <div class="settings-profile-label">
-            ${p.isKids ? 'Kids profile' : 'Standard profile'}
-            ${active && active.id === p.id ? ' • <strong>Current</strong>' : ''}
-          </div>
-        </div>
-      </div>
-      <div class="settings-profile-actions">
-        <button class="settings-small-btn" data-action="edit">Edit</button>
-        <button class="settings-small-btn" data-action="switch">Set active</button>
-        <button class="settings-small-btn danger" data-action="delete">Delete</button>
-      </div>
-    `;
-
-    card.addEventListener('click', (e) => {
-      const btn = e.target.closest('button[data-action]');
-      if (!btn) return;
-
-      const action = btn.dataset.action;
-      let list = loadProfiles();
-
-      if (action === 'edit') {
-        const newName = prompt('Profile name:', p.name);
-        if (!newName) return;
-        list[index].name = newName.trim();
-        saveProfiles(list);
-        renderSettingsProfiles();
-      } else if (action === 'switch') {
-        setActiveProfile(p);
-        renderSettingsProfiles();
-      } else if (action === 'delete') {
-        if (list.length === 1) {
-          alert('You must have at least one profile.');
-          return;
-        }
-        if (!confirm(`Delete profile "${p.name}"?`)) return;
-        list.splice(index, 1);
-        saveProfiles(list);
-        // if we deleted the active one, pick the first
-        const activeNow = getActiveProfile();
-        if (!activeNow || activeNow.id === p.id) {
-          setActiveProfile(list[0]);
-        }
-        renderSettingsProfiles();
-      }
-    });
-
-    settingsProfileList.appendChild(card);
-  });
-}
-
-function openSettings(tabName) {
-  if (!settingsShell) return;
-  settingsShell.classList.remove('hidden');
-  settingsShell.setAttribute('aria-hidden', 'false');
-
-  settingsTabs.forEach(btn => {
-    const isActive = btn.dataset.settingsTab === tabName;
-    btn.classList.toggle('settings-tab-active', isActive);
-  });
-
-  if (tabName === 'profiles') {
-    settingsProfilesTab.classList.remove('hidden');
-    settingsAccountTab.classList.add('hidden');
-  } else {
-    settingsProfilesTab.classList.add('hidden');
-    settingsAccountTab.classList.remove('hidden');
-  }
-
-  renderSettingsProfiles();
-  updateSettingsPlanLabel();
-}
-
-function closeSettings() {
-  if (!settingsShell) return;
-  settingsShell.classList.add('hidden');
-  settingsShell.setAttribute('aria-hidden', 'true');
-}
+// NOTE: Settings/profile management UI was removed for the single-profile build.
 
 // ---------- DATA GROUPS ----------
 const groups = [
@@ -246,21 +59,9 @@ const rowContainer       = $('#rowContainer');
 const continueSection    = $('#continueSection');
 const continueScroller   = $('#continueScroller');
 const searchInput        = $('#searchInput');
-const profileMenuBtn      = $('#profileMenuButton');
-const profileMenu         = $('#profileMenu');
-const profileMenuBilling  = $('#profileMenuBilling');
-const profileMenuProfiles = $('#profileMenuProfiles');
-const profileMenuSettings = $('#profileMenuSettings');
-const profileMenuLogout   = $('#profileMenuLogout');
-// settings / profiles
-const settingsShell       = $('#settingsShell');
-const settingsCloseBtn    = $('#settingsCloseBtn');
-const settingsTabs        = $$('.settings-tab');
-const settingsProfilesTab = $('#settingsProfiles');
-const settingsAccountTab  = $('#settingsAccount');
-const settingsProfileList = $('#settingsProfileList');
-const settingsAddProfile  = $('#settingsAddProfile');
-const settingsPlanLabel   = $('#settingsPlanLabel');
+const profileMenuBtn    = $('#profileMenuButton');
+const profileMenu       = $('#profileMenu');
+const profileMenuLogout = $('#profileMenuLogout');
 
 
 
@@ -988,59 +789,14 @@ if (profileMenuBtn && profileMenu) {
   });
 }
 
-if (profileMenuBilling) {
-  profileMenuBilling.addEventListener('click', () => {
-    window.location.href = 'billing.html';
-  });
-}
-
-// For now these are placeholders – you can wire them to your
-// profile picker / settings / logout logic later.
-if (profileMenuProfiles) {
-  profileMenuProfiles.addEventListener('click', () => {
-    alert('Profile management coming soon 😊');
-  });
-}
-if (profileMenuSettings) {
-  profileMenuSettings.addEventListener('click', () => {
-    profileMenu.classList.add('hidden');
-    profileMenuBtn.setAttribute('aria-expanded', 'false');
-    openSettings('profiles');
-  });
-}
-
 if (profileMenuLogout) {
   profileMenuLogout.addEventListener('click', () => {
-    alert('Wire this to your Firebase auth sign-out when ready.');
-  });
-}
-
-// settings tab switching
-if (settingsTabs && settingsTabs.length) {
-  settingsTabs.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const tab = btn.dataset.settingsTab;
-      openSettings(tab);
-    });
-  });
-}
-
-if (settingsCloseBtn) {
-  settingsCloseBtn.addEventListener('click', closeSettings);
-}
-
-if (settingsAddProfile) {
-  settingsAddProfile.addEventListener('click', () => {
-    let list = loadProfiles();
-    if (list.length >= 6) {
-      alert('Maximum of 6 profiles for this demo.');
-      return;
-    }
-    const name = prompt('New profile name:');
-    if (!name) return;
-    const id = (crypto.randomUUID && crypto.randomUUID()) || String(Date.now());
-    list.push({ id, name: name.trim(), isKids: false });
-    saveProfiles(list);
-    renderSettingsProfiles();
+    // Single action: sign out (if Firebase is loaded) then go back to login
+    try {
+      if (window.firebase && typeof window.firebase.auth === 'function') {
+        window.firebase.auth().signOut();
+      }
+    } catch {}
+    window.location.href = 'login.html';
   });
 }

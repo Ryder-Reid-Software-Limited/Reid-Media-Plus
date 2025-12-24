@@ -26,50 +26,7 @@
 </head>
 
 <body>
-    <!-- PROFILE PICKER OVERLAY (Netflix-style) -->
-  <section id="profileShell" class="profile-shell hidden" aria-hidden="true">
-    <div class="profile-panel">
-      <h2>Who&apos;s watching?</h2>
-      <div id="profileList" class="profile-list"></div>
-      <button id="profileAddBtn" class="btn ghost small">Add profile</button>
-      <button id="profileLogoutBtn" class="btn small">Log out</button>
-    </div>
-  </section>
-  <!-- SETTINGS / PROFILE MANAGEMENT -->
-<section id="settingsShell" class="settings-shell hidden" aria-hidden="true">
-  <div class="settings-panel">
-    <div class="settings-header">
-      <h2>Account & Profiles</h2>
-      <button id="settingsCloseBtn" class="btn round small">✕</button>
-    </div>
-
-    <div class="settings-tabs">
-      <button class="settings-tab settings-tab-active" data-settings-tab="profiles">
-        Profiles
-      </button>
-      <button class="settings-tab" data-settings-tab="account">
-        Account
-      </button>
-    </div>
-
-    <!-- PROFILES TAB -->
-    <div id="settingsProfiles" class="settings-tab-panel">
-      <div id="settingsProfileList" class="settings-profiles"></div>
-      <button id="settingsAddProfile" class="btn small ghost">Add profile</button>
-    </div>
-
-    <!-- ACCOUNT TAB (simple for now) -->
-    <div id="settingsAccount" class="settings-tab-panel hidden">
-      <p class="settings-account-line">
-        <strong>Plan:</strong>
-        <span id="settingsPlanLabel">Not subscribed</span>
-      </p>
-      <p class="settings-account-line">
-        Manage billing on the <a href="billing.html">Billing page</a>.
-      </p>
-    </div>
-  </div>
-</section>
+  <!-- NOTE: Billing + profile picker removed for single-profile build -->
 
 
   <!-- ====== TOP NAV / PRIME STYLE ====== -->
@@ -98,11 +55,7 @@
     </button>
 
     <div id="profileMenu" class="profile-menu hidden" role="menu">
-      <button id="profileMenuProfiles" class="profile-menu-item" type="button">Profiles</button>
-      <button id="profileMenuSettings" class="profile-menu-item" type="button">Settings</button>
-      <button id="profileMenuBilling"  class="profile-menu-item" type="button">Billing</button>
-      <hr class="profile-menu-divider">
-      <button id="profileMenuLogout"   class="profile-menu-item danger" type="button">Sign out</button>
+      <button id="profileMenuLogout" class="profile-menu-item danger" type="button">Sign out</button>
     </div>
   </div>
 </div>

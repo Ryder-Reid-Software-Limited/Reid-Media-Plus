@@ -7,7 +7,7 @@ window.CATALOG = [
   year: 2025,
   auRating: "MA15+",
   trailerSrc: "https://reidmediaplus-wba1.reidmedia.org/trailer.mp4",
-  poster: "/images/cover.png",
+  poster: "/images/coverwba.png",
   advice: ["Coarse Language", "Strong Violence", "Sexual References", "Drug References", "Mature Themes"],
   seasons: [
     {
@@ -18,7 +18,7 @@ window.CATALOG = [
           title: "Trailer",
           durationMin: 1,
           advice: ["Approved for all audiences"],
-          poster: "/images/cover.png",     // <—
+          poster: "/images/coverwba.png",     // <—
           src: "https://reidmediaplus-wba3.reidmedia.org/Trailer.mp4"
         },
         {
