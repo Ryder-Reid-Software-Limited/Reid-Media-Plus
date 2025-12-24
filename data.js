@@ -19,7 +19,7 @@ window.CATALOG = [
           durationMin: 1,
           advice: ["Approved for all audiences"],
           poster: "/images/cover.png",     // <—
-          src: "https://reidmediaplus-wba2.reidmedia.org/Episode%203.mp4"
+          src: "https://reidmediaplus-wba3.reidmedia.org/Trailer.mp4"
         },
         {
           ep: 1,
