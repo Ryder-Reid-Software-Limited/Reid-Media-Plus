@@ -7,6 +7,18 @@
 
 const $  = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
+const isSmallScreen = window.matchMedia && window.matchMedia('(max-width: 900px)').matches;
+
+if (isSmallScreen || !item.trailerSrc) {
+  heroTeaser.pause?.();
+  heroTeaser.removeAttribute('src');
+  heroTeaser.load?.();
+  heroTeaser.style.display = 'none';
+  heroPosterFallback.style.opacity = '1';
+} else {
+  // attempt autoplay on larger screens
+}
+
 
 function formatTime(s) {
   if (!isFinite(s)) return '0:00';

@@ -1610,3 +1610,26 @@ main.app-locked {
     padding-inline: 20px;
   }
 }
+
+@media (max-width: 900px) {
+  .topnav {
+    backdrop-filter: none;
+    background: rgba(10, 15, 26, .95);
+  }
+
+  .tile {
+    box-shadow: 0 14px 28px rgba(0,0,0,.65);
+    transition: none;
+  }
+  .tile:hover,
+  .tile:focus-within {
+    transform: none;
+    box-shadow: 0 14px 28px rgba(0,0,0,.65);
+  }
+
+  .row-scroller,
+  .episodes-list {
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+  }
+}
