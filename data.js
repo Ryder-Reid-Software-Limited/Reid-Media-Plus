@@ -60,6 +60,88 @@ window.CATALOG = [
     }
   ]
 },
+{
+  id: "mcu2",
+  type: "movie",
+  title: "My Creepy Uncle: Chapter 2",
+  year: 2026,
+  durationMin: 1,
+  poster: "/comingsoon.png",
+  trailerSrc: "https://playable-content.reidmedia.org/",
+  src: "https://playable-content.reidmedia.org/",
+  auRating: "MA15+",
+  advice: ["Mature Themes", "Coarse Language", "Strong Violence", "Drug References", "Sexual References"]
+},
+{
+  id: "sidequest",
+  type: "series",
+  title: "Side Quests",
+  year: 2026,
+  auRating: "CTC",
+  poster: "/comingsoon.png",
+  advice: ["Coarse Language", "Mature Themes"],
+  seasons: [
+    {
+      season: 1,
+      episodes: [
+        {
+          ep: 1,
+          title: "Coming Soon",
+          durationMin: NaN,
+          poster: "/comingsoon.png",     // <— episode-specific cover
+          src: "https://playable-content4.reidmedia.org/"
+        },
+      ]
+    }
+  ]
+},
+{
+  id: "highs",
+  type: "series",
+  title: "Highstakes",
+  year: 2026,
+  auRating: "CTC",
+  poster: "/comingsoon.png",
+  advice: ["Coarse Language", "Mature Themes"],
+  seasons: [
+    {
+      season: 1,
+      episodes: [
+        {
+          ep: 1,
+          title: "Coming Soon",
+          durationMin: NaN,
+          poster: "/comingsoon.png",     // <— episode-specific cover
+          src: "https://playable-content4.reidmedia.org/"
+        },
+      ]
+    }
+  ]
+},
+{
+  id: "rb",
+  type: "series",
+  title: "Ryder's Backyard",
+  year: 2025,
+  trailerSrc: "https://playable-content.reidmedia.org/Willy's%20Kitchen%20Trailer.mp4",
+  auRating: "M",
+  poster: "/images/rydersbackyardicons/ep1.png",
+  advice: ["Coarse Language", "Mature Themes"],
+  seasons: [
+    {
+      season: 1,
+      episodes: [
+        {
+          ep: 1,
+          title: "Valentines Day",
+          durationMin: 12,
+          poster: "/images/rydersbackyardicons/ep1.png",     // <— episode-specific cover
+          src: "https://playable-content4.reidmedia.org/RB1.mp4"
+        },
+      ]
+    }
+  ]
+},
   {
     id: "wbs2024",
     type: "movie",
@@ -145,28 +227,4 @@ window.CATALOG = [
     auRating: "PG",
     advice: ["Parental Guidance"]
   },
-  {
-  id: "rb",
-  type: "series",
-  title: "Ryder's Backyard",
-  year: 2025,
-  trailerSrc: "https://playable-content.reidmedia.org/Willy's%20Kitchen%20Trailer.mp4",
-  auRating: "M",
-  poster: "/images/rydersbackyardicons/ep1.png",
-  advice: ["Coarse Language", "Mature Themes"],
-  seasons: [
-    {
-      season: 1,
-      episodes: [
-        {
-          ep: 1,
-          title: "Valentines Day",
-          durationMin: 12,
-          poster: "/images/rydersbackyardicons/ep1.png",     // <— episode-specific cover
-          src: "https://playable-content4.reidmedia.org/RB1.mp4"
-        },
-      ]
-    }
-  ]
-},
 ];
