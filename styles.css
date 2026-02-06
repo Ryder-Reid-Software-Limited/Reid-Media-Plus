@@ -717,6 +717,10 @@ html, body {
   background: radial-gradient(circle at 80% 20%, rgba(0,168,225,.08) 0%, rgba(10,15,26,0) 60%);
 }
 .site-footer p { line-height:1.4; }
+.site-footer a { line-height:1.4; color:var(--text-dim);; text-decoration: none;}
+.site-footer a:hover {
+  text-decoration: underline;
+}
 
 /* RESPONSIVE */
 @media (max-width: 880px){
