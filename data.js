@@ -61,6 +61,16 @@ window.CATALOG = [
   ]
 },
 {
+    id: "livestream",
+    type: "movie",
+    title: "Testing LIVE",
+    year: 2026,
+    poster: "",
+    src: "https://stream.reidmediaplus.com.au/live/stream/index.m3u8",
+    auRating: "E",
+    advice: ["Exempt from Classification"],
+  },
+{
   id: "mcu2",
   type: "movie",
   title: "My Creepy Uncle: Chapter 2",
@@ -141,7 +151,7 @@ window.CATALOG = [
       ]
     }
   ]
-},
+},  
   {
     id: "wbs2024",
     type: "movie",

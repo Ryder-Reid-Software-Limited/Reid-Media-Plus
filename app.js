@@ -51,6 +51,12 @@ const groups = [
     title: 'Series',
     pill: false,
     filter: i => i.type === 'series'
+  },
+  {
+    key: 'live',
+    title: 'Live',
+    pill: false,
+    filter: i => i.type === 'live'
   }
 ];
 
